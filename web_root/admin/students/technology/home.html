@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html ng-app="hsdTechnology">
+<!-- start right frame -->
+
+<head>
+    <title>Technology Checkout</title>
+    ~[wc:commonscripts]
+    <link href="/images/css/screen.css" rel="stylesheet" media="screen">
+    <link href="/images/css/print.css" rel="stylesheet" media="print">
+    <link href="/images/css/hsdStudents.css" rel="stylesheet" media="screen">
+    <link href="/images/css/hsd/Technology.css" rel="stylesheet" media="screen">
+</head>
+
+
+<body>
+    ~[wc:admin_header_frame_css]
+    <!-- breadcrumb start -->
+    <a href="/admin/home.html" target="_top">~[text:psx.html.admin_students.misc.start_page]</a> &gt;<a href="home.html?selectstudent=nosearch" target="_top">~[text:psx.html.admin_students.misc.student_selection]</a> &gt;Technology Checkout<!-- breadcrumb end -->
+    ~[wc:admin_navigation_frame_css] 
+    ~[wc:title_student_begin_css]
+        Technology Checkout
+    ~[wc:title_student_end_css]
+    <!-- start of content and bounding box -->
+    <div ng-controller="studentTechnologyController" ng-cloak >
+        <div class="row">
+            <div class="box-round col-sm-12 col-md-12">
+                <div class="row">
+                    <h3 class="col-sm-4 col-md-4">
+                        Technology Checked Out <span ng-if="checkedout.length>0">({{checkedout.length}} Devices)</span>
+                    </h3>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-12" ng-if="checkedout.length>0">
+                            <div class="row header-row">
+                                <div class="col-sm-1 col-md-1">Device Type</div>
+                                <div class="col-sm-1 col-md-1">Tag Number</div>
+                                <div class="col-sm-1 col-md-1">Serial Number</div>
+                                <div class="col-sm-1 col-md-1">Pickup Date</div>
+                                <div class="col-sm-1 col-md-1">Picked up By</div>
+                                <div class="col-sm-1 col-md-1"></div>
+                            </div>
+                        
+                            <div ng-repeat="device in checkedout" >
+                                <div class="row">
+                                    <div class="col-sm-1 col-md-1">{{device.devicetype}}</div>
+                                    <div class="col-sm-1 col-md-1">{{device.tagnumber}}</div>
+                                    <div class="col-sm-1 col-md-1">{{device.serialnumber}}</div>
+                                    <div class="col-sm-1 col-md-1">{{device.checkedoutdate | date: "MM/dd/yyyy"}}</div>
+                                    <div class="col-sm-1 col-md-1">{{device.checkedoutby}}</div>
+                                    <div class="col-sm-1 col-md-1"><input type="button" ng-click="checkinDevice(device)" value="Check In"/></div>
+                                </div>
+                            </div>
+                        </table>    
+                    </div>
+                    <div class="col-sm-12 col-md-12" ng-if="checkedout.length==0">
+                        No technology cheked out by this student
+                    </div>
+                </div>
+                <div class="row">
+                    <h3 class="col-sm-4 col-md-4">
+                        Technology Requested <span ng-if="requested.length>0">({{requested.length}} Devices)</span> <input type="button" value="New Request" ng-click="createNewRequest()">
+                    </h3>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-12" ng-if="requested.length>0">
+                        <div class="row header-row">
+                            <div class="col-sm-1 col-md-1">Requested Device</div>
+                            <div class="col-sm-1 col-md-1">Requested Date</div>
+                            <div class="col-sm-1 col-md-1">Requested By</div>
+                            <div class="col-sm-1 col-md-1"></div>
+                        </div>
+                        <div ng-repeat="request in requested" >
+                            <div class="row">
+                                <div class="col-sm-1 col-md-1">{{request.devicetype}}</div>
+                                <div class="col-sm-1 col-md-1">{{request.requestdate | date: "MM/dd/yyyy"}}</div>
+                                <div class="col-sm-1 col-md-1">{{request.requestedby}}</div>
+                                <div class="col-sm-1 col-md-1">
+                                    <input type="button" ng-click="checkoutDevice(request)" value="Check out"/>
+                                    <input type="button" ng-click="deleteRequest(request)" value="Delete"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12" ng-if="requested.length==0">
+                        No technology requested by this student
+                    </div>
+                </div>
+                <div class="row">
+                    <h3 class="col-sm-4 col-md-4">
+                        Technology Returned <span ng-if="returned.length>0">({{returned.length}} Devices)</span>
+                    </h3>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-12" ng-if="returned.length>0"> 
+                        <div class="row header-row">
+                            <div class="col-sm-1 col-md-1">Device tye</div>
+                            <div class="col-sm-1 col-md-1">Tag Number</div>
+                            <div class="col-sm-1 col-md-1">Serial Number</div>
+                            <div class="col-sm-1 col-md-1">Returned Date</div>
+                            <div class="col-sm-1 col-md-1">Returned By</div>
+                            <div class="col-sm-4 col-md-4">Return notes</div>
+                        </div>
+                        <div ng-repeat="device in returned" >
+                            <div class="row">
+                                <div class="col-sm-1 col-md-1">{{device.devicetype}}</div>
+                                <div class="col-sm-1 col-md-1">{{device.tagnumber}}</div>
+                                <div class="col-sm-1 col-md-1">{{device.serialnumber}}</div>
+                                <div class="col-sm-1 col-md-1">{{device.returneddate | date: "MM/dd/yyyy"}}</div>
+                                <div class="col-sm-1 col-md-1">{{device.returnedby}}</div>
+                                <div class="col-sm-4 col-md-4">{{device.returnnotes}}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12" ng-if="returned.length==0">
+                        No technology returned by this student
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hide" id="dialogHolder">
+            <div id="checkoutDialog"  ng-include="'checkoutDevice.html'" ></div>
+            <div id="requestDialog"  ng-include="'requestDevice.html'" ></div>
+            <div id="checkinDialog"  ng-include="'checkinDevice.html'" ></div>
+        </div>
+    </div>
+        <!-- end of content of bounding box -->
+        ~[wc:admin_footer_frame_css]
+    </script>
+    <script src="/scripts/underscore/underscore-min-1.8.3.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0-rc.2/angular.min.js"></script>
+    <script src="/scripts/hsd/technology/app.js"></script>
+    <script src="/scripts/hsd/technology/services/requestService.js"></script>
+    <script src="/scripts/hsd/technology/services/deviceService.js"></script>
+    <script src="/scripts/hsd/technology/services/contactService.js"></script>
+    <script src="/scripts/hsd/technology/controllers/studentTechnologyController.js"></script>
+    <script src="/scripts/hsd/technology/controllers/deviceCheckoutController.js"></script>
+    <script src="/scripts/hsd/technology/controllers/deviceRequestController.js"></script>
+    <script src="/scripts/hsd/technology/controllers/deviceCheckinController.js"></script>
+
+</body>
+</html>
+<!-- end right frame -->

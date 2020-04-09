@@ -1,0 +1,16 @@
+
+
+div.header-row>div{
+    border-bottom: 1px solid #ccc;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: rgb(204, 204, 204);
+}
+
+div.padded{
+    margin-bottom: 5px;
+}
+
+h3 span {
+    float: none;
+}

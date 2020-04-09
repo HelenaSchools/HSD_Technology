@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<queries>
+    <query name="org.helenaschools.hsd_technology.devices.available" >
+        <columns>
+            <column>U_TECHNOLOGY_DEVICES.id</column>
+            <column>U_TECHNOLOGY_DEVICES.devicetype</column>
+            <column>U_TECHNOLOGY_DEVICES.tagnumber</column>
+            <column>U_TECHNOLOGY_DEVICES.serialnumber</column>
+            <column>U_TECHNOLOGY_DEVICES.ischeckedout</column>
+            <column>U_TECHNOLOGY_DEVICES.school_number</column>
+            <column>U_TECHNOLOGY_DEVICES.isactive</column>
+        </columns>
+        <sql>
+            <![CDATA[
+                SELECT 
+                    id,
+                    devicetype,
+                    tagnumber,
+                    serialnumber,
+                    ischeckedout,
+                    school_number,
+                    isactive
+                FROM U_TECHNOLOGY_DEVICES
+                WHERE isactive =1
+                    AND ischeckedout=0
+                order by tagnumber
+            ]]>
+        </sql>
+    </query>
+    <query name="org.helenaschools.hsd_technology.student.requestedDevices" >
+        <args>
+            <arg
+                name="studentsid"
+                required="true"
+                default="~(curstudid)"
+                />
+            
+        </args>
+        <columns>
+            <column>U_TECHNOLOGY_RESERVED_DEVICES.id</column>
+            <column>U_TECHNOLOGY_RESERVED_DEVICES.studentsdcid</column>
+            <column>U_TECHNOLOGY_RESERVED_DEVICES.devicetype</column>
+            <column>U_TECHNOLOGY_RESERVED_DEVICES.reserveddate</column>
+            <column>person.lastname</column>
+        </columns>
+        <sql>
+            <![CDATA[
+                SELECT 
+                    utrd.id,
+                    utrd.studentsdcid,
+                    utrd.devicetype,
+                    utrd.reserveddate,
+                    case when p.id is null then s.lastfirst else p.lastname||', '||p.firstname end as reservedby
+                FROM U_TECHNOLOGY_RESERVED_DEVICES utrd
+                    left outer join person p on p.id=utrd.reservedbyid
+                    left outer join students s on s.id=utrd.reservedbyid
+                WHERE utrd.studentsdcid =(select dcid from students where id=:studentsid)
+                order by utrd.reserveddate
+            ]]>
+        </sql>
+    </query>
+    <query name="org.helenaschools.hsd_technology.student.checkedoutDevices" >
+        <args>
+            <arg
+                name="studentsid"
+                required="true"
+                default="~(curstudid)"
+                />
+            
+        </args>
+        <columns>
+            <column column="U_TECHNOLOGY_CHECKEDOUT_DEVICE.id">checkoutid</column>
+            <column column="U_TECHNOLOGY_CHECKEDOUT_DEVICE.checkedoutbyid">Checkedoutby</column>
+            <column>U_TECHNOLOGY_CHECKEDOUT_DEVICE.checkedoutdate</column>
+            <column>U_TECHNOLOGY_CHECKEDOUT_DEVICE.devicetagnumber</column>
+            <column column="U_TECHNOLOGY_DEVICES.id">deviceid</column>
+            <column>U_TECHNOLOGY_DEVICES.devicetype</column>
+            <column>U_TECHNOLOGY_DEVICES.serialnumber</column>
+            <column>U_TECHNOLOGY_CHECKEDOUT_DEVICE.studentsdcid</column>
+        </columns>
+        <sql>
+            <![CDATA[
+                SELECT 
+                    utcd.id,
+                    case when p.id is null then s.last_name||', '||s.first_name else p.lastname||', '||p.firstname end as checkedouby,
+                    utcd.checkedoutdate,
+                    utcd.devicetagnumber,
+                    utd.id as deviceid,
+                    utd.devicetype,
+                    utd.serialnumber,
+                    utcd.studentsdcid
+                FROM U_TECHNOLOGY_CHECKEDOUT_DEVICE utcd
+                    join U_TECHNOLOGY_DEVICES utd on utd.tagnumber=utcd.devicetagnumber
+                    left outer join person p on p.id=utcd.checkedoutbyid
+                    left outer join students s on s.id=utcd.checkedoutbyid
+                WHERE utcd.studentsdcid=(select dcid from students where id=:studentsid)
+                order by utcd.checkedoutdate
+            ]]>
+        </sql>
+    </query>
+    <query name="org.helenaschools.hsd_technology.student.returnedDevices" >
+        <args>
+            <arg
+                name="studentsid"
+                required="true"
+                default="~(curstudid)"
+                />
+            
+        </args>
+        <columns>
+            <column column="U_TECHNOLOGY_RETURNED_DEVICES.returnedbyid">returnedby</column>
+            <column>U_TECHNOLOGY_RETURNED_DEVICES.returneddate</column>
+            <column>U_TECHNOLOGY_RETURNED_DEVICES.devicetagnumber</column>
+            <column>U_TECHNOLOGY_DEVICES.devicetype</column>
+            <column>U_TECHNOLOGY_DEVICES.serialnumber</column>
+            <column>U_TECHNOLOGY_RETURNED_DEVICES.returnnotes</column>
+        </columns>
+        <sql>
+            <![CDATA[
+                SELECT 
+                    case when p.id is null then s.last_name||', '||s.first_name else p.lastname||', '||p.firstname end as returnedby,
+                    utrd.returneddate,
+                    utrd.devicetagnumber,
+                    utd.devicetype,
+                    utd.serialnumber,
+                    utrd.returnnotes
+                FROM U_TECHNOLOGY_RETURNED_DEVICES utrd
+                    join U_TECHNOLOGY_DEVICES utd on utd.tagnumber=utrd.devicetagnumber
+                    left outer join person p on p.id=utrd.returnedbyid
+                    left outer join students s on s.id=utrd.returnedbyid
+                WHERE utrd.studentdcid=(select dcid from students where id=:studentsid)
+                order by utrd.returneddate
+            ]]>
+        </sql>
+    </query>
+</queries>

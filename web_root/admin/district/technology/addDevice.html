@@ -1,0 +1,86 @@
+<div ng-controller="addDeviceController" ng-cloak>
+    <form id="frmAddDevice">
+
+        <div id="addDevice">
+            <div class="col-md-10 col-sm-10">
+                <div class="header-row padded">
+                    <div class="padded col-sm-3 col-md-4">
+                        <label 
+                            for="deviceType" 
+                            class="col-md-2">Device Type</label>
+                    </div>
+                    <select 
+                        class="col-sm-9 col-md-10" 
+                        name="deviceType" id="deviceType"
+                        ng-model="newDevice.device.devicetype" 
+                        ng-change="newDevice.validate()"
+                        ng-options="option for option in deviceOptions track by option" 
+                        required>
+                        <option value=""></option>
+                    </select>
+                </div>
+                <div class="header-row padded">
+                    <div class="padded">
+                        <label 
+                            for="tagnumber" 
+                            class="col-sm-3 col-md-2">Tag Number
+                        </label>
+                    </div>
+                    <input 
+                        type="text" 
+                        class="col-sm-9 col-md-10" 
+                        name="tagnumber" 
+                        id="tagnumber"
+                        ng-change="newDevice.validate()" 
+                        ng-model="newDevice.device.tagnumber" 
+                        required>
+                </div>
+                <div class="header-row padded">
+                    <div class="padded">
+                        <label 
+                            for="serialnumber" 
+                            class="col-sm-4 col-md-3">Serial Number
+                        </label>
+                    </div>
+                    <input 
+                        type="text" 
+                        class="col-sm-9 col-md-10" 
+                        name="serialnumber" 
+                        id="serialnumber"
+                        ng-change="newDevice.validate()" 
+                        ng-model="newDevice.device.serialnumber" 
+                        required>
+                </div>
+                <div class="header-row padded">
+                    <div class="padded">
+                        <label 
+                            for="schoolid" 
+                            class="col-sm-4 col-md-3">School
+                        </label>
+                    </div>
+                    <select 
+                        class="col-sm-9 col-md-10" 
+                        name="schoolid" 
+                        id="schoolid" 
+                        ng-model="newDevice.school"
+                        ng-change="newDevice.validate()"
+                        ng-options="school.name for school in schools track by school.schoolid" 
+                        required>
+                        </select>
+                </div>
+            </div>
+            <div class="hide">
+                <button 
+                    id="submitNewDeviceButton" 
+                    type="button"
+                    class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"
+                    ng-click="newDevice.create()" 
+                    ng-show="newDevice.isvalid">
+                    <span
+                        class="ui-button-text">Add
+                    </span>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -3,7 +3,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	description="HSD - Technology" 
 	name="HSD - Technology" 
-	version="0.0.01" 
+	version="20.03.01" 
 	xsi:schemaLocation="http://plugin.powerschool.pearson.com plugin.xsd">
 <publisher name="Zachary Campbell">
 <contact email="zcampbell@helenschools.org"/>

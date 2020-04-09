@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<permission_mappings>
+    <permission name='/admin/home.html'>
+        <implies allow="get">/ws/schema/table/u_technology_devices</implies>
+        <implies allow="get">/ws/schema/table/u_technology_devices/#</implies>
+        <implies allow="get">/ws/schema/table/u_technology_devices/count</implies>
+        <implies allow="put">/ws/schema/table/u_technology_devices/#</implies>
+        <implies allow="get">/ws/schema/table/u_technology_reserved_devices</implies>
+        <implies allow="get">/ws/schema/table/u_technology_reserved_devices/#</implies>
+        <implies allow="get">/ws/schema/table/u_technology_reserved_devices/count</implies>
+        <implies allow="post">/ws/schema/table/u_technology_reserved_devices</implies>
+        <implies allow="post">/ws/schema/table/u_technology_reserved_devices/massupdatebycriteria</implies>
+        <implies allow="put">/ws/schema/table/u_technology_reserved_devices/#</implies>
+        <implies allow="delete">/ws/schema/table/u_technology_reserved_devices/#</implies>
+        <implies allow="get">/ws/schema/table/u_technology_returned_devices</implies>
+        <implies allow="get">/ws/schema/table/u_technology_returned_devices/#</implies>
+        <implies allow="get">/ws/schema/table/u_technology_returned_devices/count</implies>
+        <implies allow="post">/ws/schema/table/u_technology_returned_devices</implies>
+        <implies allow="post">/ws/schema/table/u_technology_returned_devices/massupdatebycriteria</implies>
+        <implies allow="put">/ws/schema/table/u_technology_returned_devices/#</implies>
+        <implies allow="get">/ws/schema/table/u_technology_checkedout_device</implies>
+        <implies allow="get">/ws/schema/table/u_technology_checkedout_device/#</implies>
+        <implies allow="get">/ws/schema/table/u_technology_checkedout_device/count</implies>
+        <implies allow="post">/ws/schema/table/u_technology_checkedout_device</implies>
+        <implies allow="post">/ws/schema/table/u_technology_checkedout_device/massupdatebycriteria</implies>
+        <implies allow="put">/ws/schema/table/u_technology_checkedout_device/#</implies>
+        <implies allow="delete">/ws/schema/table/u_technology_checkedout_device/#</implies>
+        <implies allow="post">/ws/schema/query/org.helenaschools.hsd_technology.devices.available</implies>
+        <implies allow="post">/ws/schema/query/org.helenaschools.hsd_technology.student.requestedDevices</implies>
+        <implies allow="post">/ws/schema/query/org.helenaschools.hsd_technology.student.checkedoutDevices</implies>
+        <implies allow="post">/ws/schema/query/org.helenaschools.hsd_technology.student.returnedDevices</implies>
+        <implies allow="post">/ws/schema/query/com.pearson.core.student.student_dcid_id_map</implies>
+        <implies allow="get">/ws/schema/table/u_technology_settings</implies>
+    </permission>
+    <permission name='admin/district/home.html'>
+        <implies allow="put">/ws/schema/table/u_technology_settings/#</implies>
+        <implies allow="post">/ws/schema/table/u_technology_settings/</implies>
+        <implies allow="delete">/ws/schema/table/u_technology_returned_devices/#</implies>
+        <implies allow="delete">/ws/schema/table/u_technology_devices/#</implies>
+        <implies allow="post">/ws/schema/table/u_technology_devices</implies>
+        <implies allow="post">/ws/schema/table/u_technology_devices/massupdatebycriteria</implies>
+    </permission>
+</permission_mappings>

@@ -1,0 +1,41 @@
+<div ng-controller="deviceRequestController" ng-cloak ng-init="studentid='~(curstudid)'">
+    <form id="frmDeviceRequest">
+        
+        <div id="deviceRequest" >
+            <div class="col-md-10 col-sm-10">
+                <div class="header-row padded">
+                    <div class="padded col-sm-3 col-md-4">
+                        <label for="deviceType"  >Device Type</label>
+                    </div>
+                    <select 
+                        class="col-sm-9 col-md-10"
+                        name="deviceType" 
+                        id="deviceType"
+                        ng-model="request.devicetype" 
+                        ng-change="request.validate()"
+                        ng-options="option for option in deviceOptions track by option"
+                        required>
+                    </select>
+                </div>
+                <div class="header-row padded">
+                    <div class="padded" class="col-sm-4 col-md-3">
+                        <label for="requestedBy" >Requested by</label>
+                    </div>
+                    <select 
+                        class="col-sm-9 col-md-10"
+                        name="requestedBy" 
+                        id="requestedBy" 
+                        ng-change="request.validate()"
+                        ng-model="request.requestby"
+                        ng-options="option.name for option in requesterOptions track by option.id"
+                        required>
+                    </select>
+                </div>
+                
+            </div>
+            <div class="hide">
+                <button id="submitRequestButton" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" ng-click="request.request()" ng-show="request.isvalid"><span class="ui-button-text">Submit Request</span></button>
+            </div>
+        </div>
+    </form>
+</div>

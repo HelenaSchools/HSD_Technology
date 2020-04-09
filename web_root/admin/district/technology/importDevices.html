@@ -1,0 +1,31 @@
+<div ng-controller="importDevicesController" ng-cloak >
+    <form id="frmImportDevices">
+        
+        <div id="importDevices" >
+            <div class="col-md-10 col-sm-10">
+                <label for="file">File:</label>
+                <input 
+                    id="files"
+                    name="file"
+                    type="file" 
+                    ng-model="file"
+                    accept="*.csv" 
+                    />
+                <output id="list"></output>
+                <div ng-if="importDeviceList.length>0" class="col-md-10 col-sm-10">
+                    <label>{{importDeviceList.length}}</label> devices in file.<br/>
+                    <label>{{importDeviceList.validDevices.length}}</label> new devices to import.
+                </div>
+            </div>
+            <div class="hide">
+                <button 
+                    id="importCsvButton" 
+                    type="button" 
+                    class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" 
+                    ng-click="importDeviceList.import()" 
+                    ng-show="importDeviceList.isvalid">
+                    <span class="ui-button-text">Import</span>
+                </button>
+            </div>
+    </form>
+</div>

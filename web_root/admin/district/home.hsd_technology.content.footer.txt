@@ -1,0 +1,4 @@
+<script>
+    $j("div.box-round")
+        .append(`<h2>Technology</h2><table class="linkDescList" id="table_id_hsd_technology"><colgroup><col><col></colgroup><tbody><tr><td><a href="/admin/district/technology/home.html">HSD Technology Settings</a></td><td>District setup and management of technology checkout.</td></tr></tbody></table>`);
+</script>

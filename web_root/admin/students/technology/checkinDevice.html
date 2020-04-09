@@ -1,0 +1,54 @@
+<div ng-controller="deviceCheckinController" ng-cloak ng-init="studentid='~(curstudid)'">
+    <form id="frmDeviceCheckin">
+        <div id="deviceCheckin" >
+            <div class="col-md-10 col-sm-10">
+                <div class="header-row padded">
+                    <div class="padded col-sm-3 col-md-4">
+                        <label for="deviceType"  >Device Type</label>
+                    </div>
+                    <div class="col-sm-9 col-md-10">{{device.device.devicetype}}</div>
+                </div>
+                <div class="header-row padded">
+                    <div class="padded col-sm-3 col-md-4">
+                        <label for="serialNumber"  >Device Serial Number</label>
+                    </div>
+                    <div class="col-sm-9 col-md-10" name="serialNumber">{{device.device.serialnumber}}</div>
+                </div>
+                <div class="header-row padded">
+                    <div class="padded col-sm-3 col-md-4">
+                        <label for="tagNumber"  >Device Tag Number</label>
+                    </div>
+                    <div class="col-sm-9 col-md-10" name="tagNumber">{{device.device.tagnumber}}</div>
+                </div>
+                <div class="header-row padded">
+                    <div class="padded col-sm-4 col-md-3"> 
+                        <label for="checkinBy" >Checked In by</label>
+                    </div>
+                    <select 
+                        class="col-sm-9 col-md-10"
+                        name="checkinBy" 
+                        id="checkinBy" 
+                        ng-change="device.validate()"
+                        ng-model="device.checkinby"
+                        ng-options="option.name for option in checkinOptions track by option.id"
+                        required>
+                    </select>
+                </div>
+                <div class="header-row padded">
+                    <div class="padded col-sm-4 col-md-3">
+                        <label for="checkinNotes">Notes:</label>
+                    </div>
+                    <div class="col-sm-9 col-md-10">
+                        <textarea name="checkinNotes" id="checkinNotes" cols="30" rows="10" ng-model="device.checkinnotes">
+
+                        </textarea>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="hide">
+                <button id="submitCheckinButton" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" ng-click="device.checkin()" ng-show="device.isvalid"><span class="ui-button-text">Submit Check In</span></button>
+            </div>
+        </div>
+    </form>
+</div>

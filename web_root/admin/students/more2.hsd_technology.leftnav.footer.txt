@@ -1,0 +1,9 @@
+<div class="hide" id="hsdTechContent">
+    <li><a href="technology/home.html?frn=~(studentfrn)">Technology Checkout</a></li>
+</div>
+
+<script>
+    $j(document).ready(function(){
+        $j('#std_administration').append($j('#hsdTechContent').html());
+    })
+</script>

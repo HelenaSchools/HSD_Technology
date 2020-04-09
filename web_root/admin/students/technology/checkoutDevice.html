@@ -1,0 +1,53 @@
+<div ng-controller="deviceCheckoutController" ng-cloak ng-init="studentid='~(curstudid)'">
+    <form id="frmDeviceCheckout">
+        
+        <div id="deviceCheckout" >
+            <div class="col-md-10 col-sm-10">
+                <div class="header-row padded">
+                    <div class="padded col-sm-3 col-md-4"><label for="deviceType"  class="col-md-2">Device Type</label></div>
+                    <select 
+                        class="col-sm-9 col-md-10"
+                        name="deviceType" 
+                        id="deviceType"
+                        ng-model="checkoutDevice.request.devicetype" 
+                        ng-change="filterDevices(checkoutDevice.request.devicetype)"
+                        ng-options="option for option in deviceOptions track by option"
+                        required>
+                        <option value=""></option>
+                    </select>
+                </div>
+                <div class="header-row padded" ng-if="!checkoutDevice.request.devicetype==null || !checkoutDevice.request.devicetype==''">
+                    <div class="padded"><label for="tagnumber" class="col-sm-3 col-md-2">Device:</label></div>
+                    <select 
+                        class="col-sm-9 col-md-10"
+                        name="tagnumber" 
+                        id="tagnumber" 
+                        ng-if="filteredDevices.length>0"
+                        ng-model="checkoutDevice.device"
+                        ng-options="option.tagnumber for option in filteredDevices track by option.tagnumber"
+                        required>
+
+                    </select>
+                    <div                         class="col-sm-9 col-md-10"
+                    name="tagnumber" 
+                    id="tagnumber" 
+                    ng-if="filteredDevices.length==0 ">There are no {{checkoutDevice.devicetype}}'s left!</div>
+                </div>
+                <div class="header-row padded">
+                    <div class="padded"><label for="checkedOutBy" class="col-sm-4 col-md-3">Checked out by</label></div>
+                    <select 
+                        class="col-sm-9 col-md-10"
+                        name="checkedOutBy" 
+                        id="checkedOutBy" 
+                        ng-change="checkoutDevice.validate()"
+                        ng-model="checkoutDevice.checkedoutby"
+                        ng-options="option.name for option in pickupOptions track by option.id"
+                        required>
+                    </select>
+                </div>
+            </div>
+            <div class="hide">
+                <button id="submitCheckoutButton" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" ng-click="checkoutDevice.checkout()" ng-show="checkoutDevice.isvalid"><span class="ui-button-text">Submit Checkout</span></button>
+            </div>
+    </form>
+</div>

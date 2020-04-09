@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html ng-app="hsdTechnology">
+    <!-- non framed CALL WITH ../admin/district/technology/home.html  -->
+    <head>
+        <title>Technology Setup</title>
+        ~[wc:commonscripts]
+		
+        <link href="/images/css/screen.css" rel="stylesheet" media="screen">
+        <link href="/images/css/print.css" rel="stylesheet" media="print">
+    </head>
+    <body ng-controller="technologySetupController" class="ng-cloak">
+        ~[wc:admin_header_css]
+		
+		<!-- breadcrumb start -->
+		<a href="/admin/home.html" target="_top">
+			~[text:psx.html.admin_analytics.atrisk.start_page]</a> &gt; 
+			<a href="/admin/district/home.html" target="_top">
+				~[text:psx.html.admin_analytics.atrisk.districtsetup]</a> &gt; 
+				Technology Setup
+		<!-- breadcrumb end -->
+		
+		~[wc:admin_navigation_css]
+		
+		<h1>Technology Setup</h1>
+		
+		<div class="feedback-alert" data-ng-if="technologyData.errorMessage.length>0">
+			{{technologyData.errorMessage}}
+		</div>
+		<div class="feedback-confirm" data-ng-if="technologyData.successMessage.length>0">
+            {{technologyData.successMessage}}
+		</div>
+        <div id="dynamic-message-container" class="screen_readers_only" role="alert" aria-live="assertive" aria-atomic="false"></div>
+		<h2>Settings
+            ~[if.modaccess]
+				<button 
+					id="setSettings" 
+					class="button" 
+					type="button" 
+					aria-label="Set Settings"
+					data-ng-click="settings.set()">
+                    Set Settings
+                </button>
+            [/if]
+        </h2>
+
+		<div class="box-round">
+            <table class="grid">
+                <colgroup><col><col></colgroup>
+                
+                <tbody>
+                    <tr > 
+						<td>Allow Device Checkout from entire inventory:</td>
+                        <td id="isglobalcheckoutsetting"><input type="checkbox" ng-model="settings.data.isglobalcheckout"> </td>
+						
+                        
+                        
+                    </tr>
+                </tbody>
+            </table>
+		</div>
+        <h2>Devices
+            ~[if.modaccess]
+				<span>
+					<button 
+						id="add_device" 
+						class="button" 
+						type="button" 
+						aria-label="Add Device"
+						ng-click="openAddDeviceDialog()">
+						Add Single Device
+					</button>
+					<button 
+						id="import_devices" 
+						class="button" 
+						type="button" 
+						aria-label="Import Devices"
+						ng-click="openImportDevicesDialog()">
+						Import CSV
+					</button>
+				</span>
+            [/if]
+        </h2>
+
+		<div class="box-round">
+            <table class="grid">
+                <colgroup><col><col><col><col></colgroup>
+                <thead>
+                    <tr>
+						<th>Device Type</th>
+                        <th class="left" scope="col" >Available</th>
+                        <th class="left" scope="col">Checked Out</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="deviceType in devices.deviceTypes"> 
+						<td>{{deviceType.name}}</td>
+                        <td id="rl{{deviceType}}Available">{{deviceType.count-deviceType.checkedout}} </td>
+						<td id="{{deviceType}}CheckedOut">{{deviceType.checkedout}}</td>
+                        <td id="{{deviceType}}Total">{{deviceType.count}}</td>
+                        
+                    </tr>
+                </tbody>
+            </table>
+		</div>
+		<script src="/scripts/underscore/underscore-min-1.8.3.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0-rc.2/angular.min.js"></script>
+		<script src="/scripts/hsd/technology/app.js"></script>
+		<script src="/scripts/hsd/technology/services/deviceService.js"></script>
+		<script src="/scripts/hsd/technology/services/settingsService.js"></script>
+		<script src="/scripts/hsd/technology/services/schoolService.js"></script>
+		<script src="/scripts/hsd/technology/controllers/technologySetupController.js"></script>
+		<script src="/scripts/hsd/technology/controllers/addDeviceController.js"></script>
+		<script src="/scripts/hsd/technology/controllers/importDevicesController.js"></script>
+
+		<!-- end of content of bounding box -->
+
+		<!-- SLIDING DRAWER BEGINS  -->
+		<div id="dialogHolder" class="hide" >
+			<div id="addDeviceDialog" ng-include="'addDevice.html'"></div>
+			<div id="importDevicesDialog" ng-include="'importDevices.html'"></div>
+		</div>
+		<!-- SLIDING DRAWER ENDS -->
+	~[wc:admin_footer_css]
+		
+    </body>
+</html><!-- non framed -->
